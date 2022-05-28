@@ -1,6 +1,6 @@
 # orderedmap
 
-[![Build Status](https://travis-ci.com/iancoleman/orderedmap.svg)](https://travis-ci.com/iancoleman/orderedmap)
+[![Build Status](https://github.com/moeshin/go-orderedmap/actions/workflows/go.yml/badge.svg)](https://github.com/moeshin/go-orderedmap/actions/workflows/go.yml)
 
 A golang data type equivalent to python's collections.OrderedDict
 
