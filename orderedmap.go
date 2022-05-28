@@ -148,22 +148,22 @@ func decodeOrderedMap(dec *json.Decoder, o *OrderedMap) error {
 			switch delim {
 			case '{':
 				if values, ok := o.values[key].(map[string]interface{}); ok {
-					newMap := OrderedMap{
+					newMap := &OrderedMap{
 						keys:       make([]string, 0, len(values)),
 						values:     values,
 						escapeHTML: o.escapeHTML,
 					}
-					if err = decodeOrderedMap(dec, &newMap); err != nil {
+					if err = decodeOrderedMap(dec, newMap); err != nil {
 						return err
 					}
 					o.values[key] = newMap
-				} else if oldMap, ok := o.values[key].(OrderedMap); ok {
-					newMap := OrderedMap{
+				} else if oldMap, ok := o.values[key].(*OrderedMap); ok {
+					newMap := &OrderedMap{
 						keys:       make([]string, 0, len(oldMap.values)),
 						values:     oldMap.values,
 						escapeHTML: o.escapeHTML,
 					}
-					if err = decodeOrderedMap(dec, &newMap); err != nil {
+					if err = decodeOrderedMap(dec, newMap); err != nil {
 						return err
 					}
 					o.values[key] = newMap
@@ -194,22 +194,22 @@ func decodeSlice(dec *json.Decoder, s []interface{}, escapeHTML bool) error {
 			case '{':
 				if index < len(s) {
 					if values, ok := s[index].(map[string]interface{}); ok {
-						newMap := OrderedMap{
+						newMap := &OrderedMap{
 							keys:       make([]string, 0, len(values)),
 							values:     values,
 							escapeHTML: escapeHTML,
 						}
-						if err = decodeOrderedMap(dec, &newMap); err != nil {
+						if err = decodeOrderedMap(dec, newMap); err != nil {
 							return err
 						}
 						s[index] = newMap
-					} else if oldMap, ok := s[index].(OrderedMap); ok {
-						newMap := OrderedMap{
+					} else if oldMap, ok := s[index].(*OrderedMap); ok {
+						newMap := &OrderedMap{
 							keys:       make([]string, 0, len(oldMap.values)),
 							values:     oldMap.values,
 							escapeHTML: escapeHTML,
 						}
-						if err = decodeOrderedMap(dec, &newMap); err != nil {
+						if err = decodeOrderedMap(dec, newMap); err != nil {
 							return err
 						}
 						s[index] = newMap
